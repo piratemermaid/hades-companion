@@ -1,4 +1,4 @@
-import { Stack } from '@mui/material';
+import { Card, CardContent } from '@mui/material';
 
 import {
   ClearsSection,
@@ -31,5 +31,9 @@ export const ContentSection = ({ selectedTab, selectedGame }: Props) => {
     }
   };
 
-  return <Stack spacing={2}>{getContent()}</Stack>;
+  return (
+    <Card sx={{ width: '80%', maxWidth: '1000px' }}>
+      <CardContent>{getContent()}</CardContent>
+    </Card>
+  );
 };
