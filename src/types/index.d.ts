@@ -18,3 +18,11 @@ type Boon = {
     boons: string[];
   };
 };
+
+type Keepsake = {
+  name: string;
+  from: string;
+  description: string;
+  bondMessage?: string;
+  notes?: string;
+};
