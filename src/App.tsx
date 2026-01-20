@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Stack, Typography } from '@mui/material';
 
 import {
@@ -6,10 +5,11 @@ import {
   GameButtonSection,
   TabButtonSection,
 } from '@components/layout';
+import { useNavigationStore } from '@stores';
 
 function App() {
-  const [selectedGame, setSelectedGame] = useState<Game>('hades');
-  const [selectedTab, setSelectedTab] = useState<Tab>('clears');
+  const { selectedGame, selectedTab, setSelectedGame, setSelectedTab } =
+    useNavigationStore();
 
   return (
     <Stack spacing={2} alignItems="center">

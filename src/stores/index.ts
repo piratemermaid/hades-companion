@@ -1,3 +1,4 @@
 export * from './clearsStore';
-export * from './propheciesStore';
 export * from './keepsakesStore';
+export * from './navigationStore';
+export * from './propheciesStore';
