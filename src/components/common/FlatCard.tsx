@@ -1,4 +1,4 @@
-import { Card, CardContent } from '@mui/material';
+import { Card, CardContent, Stack } from '@mui/material';
 
 type Props = {
   children: React.ReactNode;
@@ -6,8 +6,15 @@ type Props = {
 
 export const FlatCard = ({ children }: Props) => {
   return (
-    <Card sx={{ boxShadow: 'none' }}>
-      <CardContent>{children}</CardContent>
+    <Card
+      sx={{
+        boxShadow: 'none',
+        bgcolor: 'card.flat',
+      }}
+    >
+      <CardContent>
+        <Stack spacing={1}>{children}</Stack>
+      </CardContent>
     </Card>
   );
 };

@@ -12,6 +12,7 @@ export type Clear = {
 type ClearsState = {
   clears: Clear[];
   addClear: (clear: Clear) => void;
+  removeClear: (clear: Clear) => void;
   getClearsByGame: (game: Game) => Clear[];
 };
 
@@ -22,6 +23,20 @@ export const useClearsStore = create<ClearsState>()(
       addClear: (clear) => {
         set((state) => ({
           clears: [...state.clears, clear],
+        }));
+      },
+      removeClear: (clearToRemove) => {
+        set((state) => ({
+          clears: state.clears.filter(
+            (clear) =>
+              !(
+                clear.game === clearToRemove.game &&
+                clear.weapon === clearToRemove.weapon &&
+                clear.aspect === clearToRemove.aspect &&
+                clear.fearLevel === clearToRemove.fearLevel &&
+                clear.clearType === clearToRemove.clearType
+              )
+          ),
         }));
       },
       getClearsByGame: (game) => {
