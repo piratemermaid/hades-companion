@@ -1,1 +1,15 @@
-export const PROPHECIES = [];
+export const PROPHECIES = [
+  { name: 'Athena Boons' },
+  { name: 'Zeus Boons' },
+  { name: 'PoseidonBoons' },
+  { name: 'Aphrodite Boons' },
+  { name: 'Dionysus Boons' },
+  { name: 'Hermes Boons' },
+  { name: 'Acquire All Weapons' },
+  { name: 'Stygius Enchantments' },
+  { name: 'Eternal Spear Enchantments' },
+  { name: 'Shield of Chaos Enchantments' },
+  { name: 'Heart-Seeking Bow Enchantments' },
+  { name: 'Twin Fists of Malphon Enchantments' },
+  { name: 'Adamant Rail Enchantments' },
+];
