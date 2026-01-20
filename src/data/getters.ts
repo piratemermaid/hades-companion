@@ -6,6 +6,7 @@ import {
 import {
   WEAPONS as HADES2_WEAPONS,
   PROPHECIES as HADES2_PROPHECIES,
+  KEEPSAKES as HADES2_KEEPSAKES,
 } from '@data/hades2';
 
 export const getWeapons = (game: Game): Weapon[] => {
@@ -35,7 +36,7 @@ export const getKeepsakes = (game: Game): Keepsake[] => {
     case 'hades':
       return HADES_KEEPSAKES;
     case 'hades2':
-      return []; // Hades 2 keepsakes not yet added
+      return HADES2_KEEPSAKES;
     default:
       return [];
   }
