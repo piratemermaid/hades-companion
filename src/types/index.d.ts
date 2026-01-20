@@ -5,3 +5,16 @@ type Weapon = {
   name: string;
   aspects: string[];
 };
+
+type Prophecy = {
+  name: string;
+  items?: string[];
+};
+
+type Boon = {
+  name: string;
+  boonsRequired: {
+    name: string;
+    boons: string[];
+  };
+};
