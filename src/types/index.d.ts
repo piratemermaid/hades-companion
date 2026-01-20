@@ -26,3 +26,10 @@ type Keepsake = {
   bondMessage?: string;
   notes?: string;
 };
+
+type Character = {
+  name: string;
+  title: string;
+  type: string;
+  maxHearts?: number;
+};

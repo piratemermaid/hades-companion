@@ -1,5 +1,5 @@
 import { IconButton, Stack, Typography } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
+import { Delete as DeleteIcon } from '@mui/icons-material';
 
 import { ClearTypeBadge } from '@components/content/clears';
 import { type Clear } from '@stores';
