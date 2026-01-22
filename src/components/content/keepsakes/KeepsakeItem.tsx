@@ -1,6 +1,8 @@
 import { Checkbox, Stack, Typography } from '@mui/material';
 
 import { useKeepsakesStore } from '@stores';
+import { Spoiler } from '@components/common';
+import { isSpoilerKeepsake } from '@utils/spoilerUtils';
 
 type Props = {
   game: Game;
@@ -15,10 +17,41 @@ export const KeepsakeItem = ({ game, keepsake }: Props) => {
 
   const keepsakeKey = `${game}:${keepsake.name}`;
   const isCompleted = completedKeepsakes.includes(keepsakeKey);
+  const isSpoiler = isSpoilerKeepsake(game, keepsake.name);
 
   const handleToggle = () => {
     toggleKeepsake(game, keepsake.name);
   };
+
+  const content = (
+    <Stack direction="column" spacing={0.25} sx={{ flex: 1, minWidth: 0 }}>
+      <Stack direction="row" spacing={1} alignItems="center">
+        <Typography
+          variant="body2"
+          sx={{ opacity: isCompleted ? 0.5 : 1, fontWeight: 500 }}
+        >
+          {keepsake.name}
+        </Typography>
+        <Typography
+          variant="caption"
+          color="text.secondary"
+          sx={{ fontSize: '0.75rem' }}
+        >
+          ({keepsake.from})
+        </Typography>
+      </Stack>
+      <Typography
+        variant="caption"
+        color="text.secondary"
+        sx={{
+          fontSize: '0.75rem',
+          opacity: isCompleted ? 0.4 : 0.7,
+        }}
+      >
+        {keepsake.description}
+      </Typography>
+    </Stack>
+  );
 
   return (
     <Stack
@@ -34,33 +67,13 @@ export const KeepsakeItem = ({ game, keepsake }: Props) => {
       onClick={handleToggle}
     >
       <Checkbox checked={isCompleted} size="small" sx={{ p: 0.25, mt: 0.25 }} />
-      <Stack direction="column" spacing={0.25} sx={{ flex: 1, minWidth: 0 }}>
-        <Stack direction="row" spacing={1} alignItems="center">
-          <Typography
-            variant="body2"
-            sx={{ opacity: isCompleted ? 0.5 : 1, fontWeight: 500 }}
-          >
-            {keepsake.name}
-          </Typography>
-          <Typography
-            variant="caption"
-            color="text.secondary"
-            sx={{ fontSize: '0.75rem' }}
-          >
-            ({keepsake.from})
-          </Typography>
-        </Stack>
-        <Typography
-          variant="caption"
-          color="text.secondary"
-          sx={{
-            fontSize: '0.75rem',
-            opacity: isCompleted ? 0.4 : 0.7,
-          }}
-        >
-          {keepsake.description}
-        </Typography>
-      </Stack>
+      {isSpoiler ? (
+        <Spoiler game={game} itemName={keepsake.name}>
+          {content}
+        </Spoiler>
+      ) : (
+        content
+      )}
     </Stack>
   );
 };
