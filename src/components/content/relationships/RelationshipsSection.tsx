@@ -1,13 +1,21 @@
 import { useMemo, useEffect } from 'react';
-import { Stack, Typography, Grid, ToggleButton } from '@mui/material';
+import { Stack, Typography, Grid, ToggleButton, Divider } from '@mui/material';
 import { Star as StarIcon } from '@mui/icons-material';
 
 import { CharacterCard } from '@components/content/relationships';
-import { getCharacters } from '@data';
 import { useRelationshipsStore } from '@stores';
+import { getCharacters } from '@data';
+import { getCategoryName, getCategoryOrder } from '@utils';
 
 type Props = {
   selectedGame: Game;
+};
+
+type GroupedCharacters = {
+  category: string;
+  categoryName: string;
+  order: number;
+  characters: Character[];
 };
 
 export const RelationshipsSection = ({ selectedGame }: Props) => {
@@ -52,6 +60,34 @@ export const RelationshipsSection = ({ selectedGame }: Props) => {
     return filtered;
   }, [characters, showFavoritesOnly, favorites, selectedGame]);
 
+  // Group and sort characters by category
+  const groupedCharacters = useMemo(() => {
+    // Group by type
+    const grouped = filteredCharacters.reduce(
+      (acc, character) => {
+        const category = character.type;
+        if (!acc[category]) {
+          acc[category] = [];
+        }
+        acc[category].push(character);
+        return acc;
+      },
+      {} as Record<string, Character[]>
+    );
+
+    // Sort characters alphabetically within each category and create grouped structure
+    const groupedArray: GroupedCharacters[] = Object.entries(grouped)
+      .map(([category, chars]) => ({
+        category,
+        categoryName: getCategoryName(category, selectedGame),
+        order: getCategoryOrder(category, selectedGame),
+        characters: chars.sort((a, b) => a.name.localeCompare(b.name)),
+      }))
+      .sort((a, b) => a.order - b.order);
+
+    return groupedArray;
+  }, [filteredCharacters, selectedGame]);
+
   const totalHearts = getTotalHearts(selectedGame);
   const maxTotalHearts = getMaxTotalHearts(selectedGame);
 
@@ -92,20 +128,41 @@ export const RelationshipsSection = ({ selectedGame }: Props) => {
         </ToggleButton>
       </Stack>
 
-      {/* Character grid */}
-      <Grid container spacing={2}>
-        {filteredCharacters.map((character) => (
-          <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }} key={character.name}>
-            <CharacterCard
-              game={selectedGame}
-              character={character}
-              maxHearts={character.maxHearts || 0}
-            />
-          </Grid>
-        ))}
-      </Grid>
-
-      {filteredCharacters.length === 0 && (
+      {/* Character groups */}
+      {groupedCharacters.length > 0 ? (
+        <Stack spacing={3}>
+          {groupedCharacters.map((group) => (
+            <Stack key={group.category} spacing={1.5}>
+              <Stack direction="row" alignItems="center" spacing={1}>
+                <Typography
+                  variant="subtitle1"
+                  sx={{ fontWeight: 600, textTransform: 'uppercase' }}
+                >
+                  {group.categoryName}
+                </Typography>
+                <Divider sx={{ flex: 1 }} />
+                <Typography variant="caption" color="text.secondary">
+                  {group.characters.length}
+                </Typography>
+              </Stack>
+              <Grid container spacing={2}>
+                {group.characters.map((character) => (
+                  <Grid
+                    size={{ xs: 12, sm: 6, md: 4, lg: 3 }}
+                    key={character.name}
+                  >
+                    <CharacterCard
+                      game={selectedGame}
+                      character={character}
+                      maxHearts={character.maxHearts || 0}
+                    />
+                  </Grid>
+                ))}
+              </Grid>
+            </Stack>
+          ))}
+        </Stack>
+      ) : (
         <Typography variant="body2" color="text.secondary" align="center">
           {showFavoritesOnly
             ? 'No favorite characters yet'

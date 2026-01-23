@@ -44,7 +44,7 @@ export const getKeepsakes = (game: Game): Keepsake[] => {
   }
 };
 
-export const getCharacters = (game: Game) => {
+export const getCharacters = (game: Game): Character[] => {
   switch (game) {
     case 'hades':
       return HADES_CHARACTERS;

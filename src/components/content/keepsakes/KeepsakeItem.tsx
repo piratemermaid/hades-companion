@@ -2,7 +2,6 @@ import { Checkbox, Stack, Typography } from '@mui/material';
 
 import { useKeepsakesStore } from '@stores';
 import { Spoiler } from '@components/common';
-import { isSpoilerKeepsake } from '@utils/spoilerUtils';
 
 type Props = {
   game: Game;
@@ -17,7 +16,7 @@ export const KeepsakeItem = ({ game, keepsake }: Props) => {
 
   const keepsakeKey = `${game}:${keepsake.name}`;
   const isCompleted = completedKeepsakes.includes(keepsakeKey);
-  const isSpoiler = isSpoilerKeepsake(game, keepsake.name);
+  const isSpoiler = keepsake.isSpoiler === true;
 
   const handleToggle = () => {
     toggleKeepsake(game, keepsake.name);

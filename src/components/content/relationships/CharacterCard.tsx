@@ -7,7 +7,7 @@ import {
 } from '@mui/icons-material';
 
 import { useRelationshipsStore } from '@stores';
-import { FlatCard } from '@components/common';
+import { FlatCard, Spoiler } from '@components/common';
 
 type Props = {
   game: Game;
@@ -26,6 +26,7 @@ export const CharacterCard = ({ game, character, maxHearts }: Props) => {
 
   const currentHearts = heartProgress[key] || 0;
   const isFavorite = favorites.includes(key);
+  const isSpoiler = character.isSpoiler === true;
 
   const handleHeartClick = (heartIndex: number) => {
     // If clicking on a filled heart, set to that number
@@ -34,84 +35,94 @@ export const CharacterCard = ({ game, character, maxHearts }: Props) => {
     setHeartProgress(game, character.name, newHearts);
   };
 
+  const cardContent = (
+    <Stack
+      spacing={1.5}
+      sx={{
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+      }}
+    >
+      {/* Header with name and favorite icon */}
+      <Stack
+        direction="row"
+        alignItems="center"
+        justifyContent="space-between"
+        sx={{ flexShrink: 0 }}
+      >
+        <Typography variant="h6" sx={{ fontSize: '1rem', fontWeight: 500 }}>
+          {character.name}
+        </Typography>
+        <IconButton
+          size="small"
+          onClick={() => toggleFavorite(game, character.name)}
+          sx={{ p: 0.5, flexShrink: 0 }}
+        >
+          {isFavorite ? (
+            <StarIcon sx={{ fontSize: '20px', color: 'warning.main' }} />
+          ) : (
+            <StarBorderIcon sx={{ fontSize: '20px' }} />
+          )}
+        </IconButton>
+      </Stack>
+
+      {/* Hearts row */}
+      <Stack
+        direction="row"
+        spacing={0.5}
+        flexWrap="wrap"
+        sx={{ flexGrow: 1, minHeight: '40px' }}
+      >
+        {Array.from({ length: maxHearts }).map((_, index) => {
+          const isFilled = index < currentHearts;
+          return (
+            <IconButton
+              key={index}
+              size="small"
+              onClick={() => handleHeartClick(index)}
+              sx={{
+                p: 0,
+                width: '20px',
+                height: '20px',
+                flexShrink: 0,
+                '&:hover': { opacity: 0.8 },
+              }}
+            >
+              {isFilled ? (
+                <HeartIcon sx={{ fontSize: '20px', color: 'error.main' }} />
+              ) : (
+                <HeartBorderIcon
+                  sx={{ fontSize: '20px', color: 'text.secondary' }}
+                />
+              )}
+            </IconButton>
+          );
+        })}
+      </Stack>
+
+      {/* Progress */}
+      <Stack
+        direction="row"
+        alignItems="center"
+        sx={{ flexShrink: 0, mt: 'auto' }}
+      >
+        <Typography variant="body2" color="text.secondary">
+          {currentHearts} / {maxHearts}
+        </Typography>
+      </Stack>
+    </Stack>
+  );
+
   return (
     <FlatCard>
-      <Stack
-        spacing={1.5}
-        sx={{
-          height: '100%',
-          display: 'flex',
-          flexDirection: 'column',
-        }}
-      >
-        {/* Header with name and favorite icon */}
-        <Stack
-          direction="row"
-          alignItems="center"
-          justifyContent="space-between"
-          sx={{ flexShrink: 0 }}
-        >
-          <Typography variant="h6" sx={{ fontSize: '1rem', fontWeight: 500 }}>
-            {character.name}
-          </Typography>
-          <IconButton
-            size="small"
-            onClick={() => toggleFavorite(game, character.name)}
-            sx={{ p: 0.5, flexShrink: 0 }}
-          >
-            {isFavorite ? (
-              <StarIcon sx={{ fontSize: '20px', color: 'warning.main' }} />
-            ) : (
-              <StarBorderIcon sx={{ fontSize: '20px' }} />
-            )}
-          </IconButton>
-        </Stack>
-
-        {/* Hearts row */}
-        <Stack
-          direction="row"
-          spacing={0.5}
-          flexWrap="wrap"
-          sx={{ flexGrow: 1, minHeight: '40px' }}
-        >
-          {Array.from({ length: maxHearts }).map((_, index) => {
-            const isFilled = index < currentHearts;
-            return (
-              <IconButton
-                key={index}
-                size="small"
-                onClick={() => handleHeartClick(index)}
-                sx={{
-                  p: 0,
-                  width: '20px',
-                  height: '20px',
-                  flexShrink: 0,
-                  '&:hover': { opacity: 0.8 },
-                }}
-              >
-                {isFilled ? (
-                  <HeartIcon sx={{ fontSize: '20px', color: 'error.main' }} />
-                ) : (
-                  <HeartBorderIcon
-                    sx={{ fontSize: '20px', color: 'text.secondary' }}
-                  />
-                )}
-              </IconButton>
-            );
-          })}
-        </Stack>
-
-        {/* Progress */}
-        <Stack
-          direction="row"
-          alignItems="center"
-          sx={{ flexShrink: 0, mt: 'auto' }}
-        >
-          <Typography variant="body2" color="text.secondary">
-            {currentHearts} / {maxHearts}
-          </Typography>
-        </Stack>
-      </Stack>
+      {isSpoiler ? (
+        <Spoiler game={game} itemName={character.name}>
+          {cardContent}
+        </Spoiler>
+      ) : (
+        cardContent
+      )}
     </FlatCard>
   );
 };

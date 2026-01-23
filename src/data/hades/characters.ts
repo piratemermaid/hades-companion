@@ -148,5 +148,6 @@ export const CHARACTERS = [
     title: 'Queen of the Underworld',
     type: 'hidden',
     maxHearts: 9,
+    isSpoiler: true,
   },
 ];

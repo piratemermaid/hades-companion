@@ -25,6 +25,7 @@ type Keepsake = {
   description: string;
   bondMessage?: string;
   notes?: string;
+  isSpoiler?: boolean;
 };
 
 type Character = {
@@ -32,4 +33,5 @@ type Character = {
   title: string;
   type: string;
   maxHearts?: number;
+  isSpoiler?: boolean;
 };

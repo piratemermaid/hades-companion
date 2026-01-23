@@ -207,6 +207,7 @@ export const KEEPSAKES = [
     description:
       "While at Fates' Whim, gain a random Hades blessing and most boons have +1/2/3/4 level(s).",
     notes: 'Location: After finishing the game, Tartarus (Underworld)',
+    isSpoiler: true,
   },
   {
     name: 'Calling Card',
@@ -215,6 +216,7 @@ export const KEEPSAKES = [
       "While at Fates' Whim, you can rarify Olympian blessings up to 2/4/6/8 times this time.",
     notes:
       "Location: After finishing the game, purchase Infernal Contract from Charon's Shop and beat Zagreus twice",
+    isSpoiler: true,
   },
   {
     name: 'Time Piece',
@@ -223,6 +225,7 @@ export const KEEPSAKES = [
       "While at Fates' Whim, you can purge most rewards for Gold Crowns up to 2/3/4/5 times this night.",
     notes:
       'Location: After finishing the game, at the first spot you met him, before Oceanus (Underworld)',
+    isSpoiler: true,
   },
   {
     name: 'Transcendent Embryo',

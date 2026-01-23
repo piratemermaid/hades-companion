@@ -195,6 +195,7 @@ export const KEEPSAKES = [
       'From Persephone; you share a Growing Bond. The dead live on in the underworld, and her nurturing instinct there also thrives.',
     notes:
       "Infernal Trove fights do not count toward Pom Blossom's Boon levels. Individual chambers of each Satyr Tunnel in the Temple of Styx do count for Pom Blossom. Pom Blossom is not affected by Sweet Nectar. Boon levels gained while the Pom Blossom is equipped will not be removed if the keepsake is unequipped.",
+    isSpoiler: true,
   },
   {
     name: 'Sigil of the Dead',
@@ -205,5 +206,6 @@ export const KEEPSAKES = [
       'From Hades; you share an Intractable Bond. The feared and distant Underworld King knows that his hardest work is still ahead of him.',
     notes:
       "Hades' Aid counts as a boon and can be upgraded, but maxes out at Epic rarity. Hades' Aid cannot gain levels from Poms, however. The Sigil of the Dead cannot be equipped if another god's Aid has been chosen. While Invisible, Zagreus cannot be targeted, moves +50% faster, and deals bonus damage for 2 seconds (or until he strikes). At Max Gauge, Zagreus turns Unseen instead of Invisible, increasing bonus damage to 5 seconds and not expiring when Zagreus strikes. Activating the Call removes all of the effects: Styx Poison, Gorgon Petrified, Hit Stun due to self damage by Hazard Bomb, Charmed, Chill, Wringer's grasp. It also removes Hades' Skull Casts from the ground, but not the Boiling Blood debuff. The Sigil is one of two Keepsakes that can only be acquired after finishing the main story, the other being the Pom Blossom.",
+    isSpoiler: true,
   },
 ];
